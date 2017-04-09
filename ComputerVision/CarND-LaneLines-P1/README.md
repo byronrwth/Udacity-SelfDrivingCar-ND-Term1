@@ -14,8 +14,8 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-![grayscale](https://github.com/udacity/CarND-LaneLines-P1/blob/master/examples/grayscale.jpg | width=100)
-![line-segments-example](https://github.com/udacity/CarND-LaneLines-P1/blob/master/examples/line-segments-example.jpg | width=100)
+![grayscale]<img src="https://github.com/udacity/CarND-LaneLines-P1/blob/master/examples/grayscale.jpg" width="200" height="200" />
+![line-segments-example]<img src="https://github.com/udacity/CarND-LaneLines-P1/blob/master/examples/line-segments-example.jpg" width="200" height="200" />
 
 
 ---
