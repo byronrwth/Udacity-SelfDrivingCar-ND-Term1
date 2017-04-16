@@ -68,8 +68,8 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 ![ color resized general caution ](https://github.com/byronrwth/Udacity-SelfDrivingCar-ND-Term1/blob/master/CNN/CarND-Traffic-Sign-Classifier-P2/color_caution.png)
 ![ gray resized general caution ](https://github.com/byronrwth/Udacity-SelfDrivingCar-ND-Term1/blob/master/CNN/CarND-Traffic-Sign-Classifier-P2/gray_caution.png)
 
-    As a last step, I normalized pixel values from [0, 255] into [0, 1] for better matching activation function ranges, by dividing 255.0 ;
 
+    As a last step, I normalized pixel values from [0, 255] into [0, 1] for better matching activation function ranges, by dividing 255.0 ;
     I can rotate signs into 90 degree, 180 degree, 270 degree to generate more training data, because in this way I can makeup equal number of samples for each class type, therefore balance features trainings.
 
 
@@ -82,10 +82,10 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 |:---------------------:|:---------------------------------------------:| 
 | Input         		| 32x32x3 RGB image   							| 
 | Convolution 5x5     	| 1x1 stride, VALID padding, outputs 28x28x6 	|
-| RELU					|												|
+| RELU					|			SAME padding						|
 | Max pooling	      	| 2x2 stride,  outputs 14x14x6 				    |
 | Convolution 5x5	    | 1x1 stride, VALID padding, outputs 10x10x16   |
-| RELU                  |                                               |
+| RELU                  |       SAME padding                            |
 | Max pooling           | 2x2 stride,  outputs 5x5x16                   |
 | Fully connected		| Input = 400. Output = 120.        		    |
 | RELU				    | SAME padding        							|
@@ -159,11 +159,11 @@ after 20-30 epochs, my test accuracy reaches 88%, validation reaches 95%
 
 Here are five German traffic signs that I found on the web:
 
-![ 30 zone ](https://www.google.de/imgres?imgurl=http%3A%2F%2Fcdn.xl.thumbs.canstockphoto.com%2Fcanstock14957677.jpg&imgrefurl=http%3A%2F%2Fwww.canstockphoto.com%2Fimages-photos%2Ftraffic-signs-maximum-speed.html&docid=-DhzUuddTPMhxM&tbnid=jBCnFxElHvgl2M%3A&vet=10ahUKEwjqkMmhvqnTAhWjJcAKHVNRDgUQMwhjKC0wLQ..i&w=270&h=194&safe=off&bih=758&biw=1720&q=german%20traffic%20signs&ved=0ahUKEwjqkMmhvqnTAhWjJcAKHVNRDgUQMwhjKC0wLQ&iact=mrc&uact=8)
+![ 30 zone ](http://cdn.xl.thumbs.canstockphoto.com/canstock14957677.jpg)
 ![ general caution sign after human's face ](http://storage.torontosun.com/v1/blogs-prod-photos/5/0/d/a/e/50dae8694fd60fb29cec2d767c897bb0.jpg?stmp=1290376611)
-![ priority for oncoming vehicle ](https://www.google.de/imgres?imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F9%2F91%2FZeichen_208.svg%2F120px-Zeichen_208.svg.png&imgrefurl=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FRoad_signs_in_Germany&docid=LsOI0ct_PJpQ9M&tbnid=HXmtpvAESe0INM%3A&vet=10ahUKEwjqkMmhvqnTAhWjJcAKHVNRDgUQMwhXKCEwIQ..i&w=120&h=120&safe=off&bih=758&biw=1720&q=german%20traffic%20signs&ved=0ahUKEwjqkMmhvqnTAhWjJcAKHVNRDgUQMwhXKCEwIQ&iact=mrc&uact=8)
-![ road work sign under sunshine ](https://www.google.de/imgres?imgurl=http%3A%2F%2Fa.rgbimg.com%2Fcache1nHmS6%2Fusers%2Fs%2Fsu%2Fsundstrom%2F300%2FmifuUb0.jpg&imgrefurl=http%3A%2F%2Fwww.rgbstock.com%2Fphoto%2FmifuUb0%2FTraffic%2BSign&docid=lOWu3Z0lDLKqrM&tbnid=6gOYLwt7br8W6M%3A&vet=10ahUKEwjqkMmhvqnTAhWjJcAKHVNRDgUQMwhbKCUwJQ..i&w=300&h=225&safe=off&bih=758&biw=1720&q=german%20traffic%20signs&ved=0ahUKEwjqkMmhvqnTAhWjJcAKHVNRDgUQMwhbKCUwJQ&iact=mrc&uact=8)
-![ yellow diamond in village ](https://www.google.de/imgres?imgurl=http%3A%2F%2Fbicyclegermany.com%2FImages%2FLaws%2FArterial.jpg&imgrefurl=http%3A%2F%2Fbicyclegermany.com%2Fgerman_bicycle_laws.html&docid=hhnc9xU3HHVSrM&tbnid=uGg7Wbl1OO8DqM%3A&vet=10ahUKEwjqkMmhvqnTAhWjJcAKHVNRDgUQMwhaKCQwJA..i&w=640&h=480&safe=off&bih=758&biw=1720&q=german%20traffic%20signs&ved=0ahUKEwjqkMmhvqnTAhWjJcAKHVNRDgUQMwhaKCQwJA&iact=mrc&uact=8)
+![ priority for oncoming vehicle ](https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Zeichen_208.svg/120px-Zeichen_208.svg.png)
+![ road work sign under sunshine ](http://a.rgbimg.com/cache1nHmS6/users/s/su/sundstrom/300/mifuUb0.jpg)
+![ yellow diamond in village ](http://bicyclegermany.com/Images/Laws/Arterial.jpg)
 
 
 The image "30 zone" might be difficult to classify because orginal image will be resized to 32,32 ,which may lost pixels, also the sign itself is Only 30% large in the whole picture.
