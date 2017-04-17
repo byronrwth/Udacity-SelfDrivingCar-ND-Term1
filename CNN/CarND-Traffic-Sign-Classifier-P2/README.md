@@ -181,6 +181,13 @@ The image "yellow diamond in village" might be difficult to classify because yel
 
 [*2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).*]
 
+in test set I got 88% accuracy;
+
+in my own new traffic signs, 1 of 6 were correct, only 16.7% correct, which is because:
+
+1. new traffic signs are downloaded directly from internet, not orginially 32 * 32 large, so during resize process, they do not perfectly keep the sign parts, i.e. information is losing
+2. my LeNet architecture is overfitting, it has been trained to detect signs in middle of 32 * 32 images, further it should be trained to detect signs in any area, left up corner, right bottom corner within the image, even only parts of signs in the image shall be able to identify
+
 Here are the results of the prediction:
 
 | Image			                    |     Prediction	        					    | 
@@ -211,11 +218,47 @@ For the "yellow diamond in village" image, the model is relatively sure that thi
 
 For the "30 zone" image, the model is relatively sure that this is a Road work sign (probability of 0.99). 
 
+| Probability           |     Prediction                                | 
+|:---------------------:|:---------------------------------------------:| 
+| .99                   | road work                                     | 
+| .001                  | dangerous curve to right                      |
+| .001                  | ahead only                                    |
+| .001                  | bicycles crossing                             |
+| .001                  | dangerous curve to left                       |
+
+
+
 For the "general caution sign after a human face" image, the model is relatively sure that this is a Turn right ahead sign (probability of 0.85). 
+
+| Probability           |     Prediction                                | 
+|:---------------------:|:---------------------------------------------:| 
+| .85                   | turn right ahead                              | 
+| .14                   | ahead only                                    |
+| .001                  | go straight or right                          |
+| .001                  | no entry                                      |
+| .001                  | road work                                     |
+
+
 
 For the "priority for oncoming vehicle" image, the model cannot tell whether it is Road work sign (probability of 0.46), or Priority road (8%), Keep right (8%), General caution(8%)
 
+| Probability           |     Prediction                                | 
+|:---------------------:|:---------------------------------------------:| 
+| .46                   | road work                                     | 
+| .08                   | Priority road                                 |
+| .08                   | Keep right                                    |
+| .08                   | General caution                               |
+| .06                   | Dangerous curve to the right                  |
+
 For the "road work sign under sunshine" image, the model is relatively sure that this is a Wild animals crossing sign (probability of 0.91). 
+
+| Probability           |     Prediction                                | 
+|:---------------------:|:---------------------------------------------:| 
+| .91                   | Wild animals crossing                         | 
+| .06                   | Road work                                     |
+| .02                   | Go straight or left                           |
+| .001                  | Bicycles crossing                             |
+| .001                  | Double curve                                  |
 
 
 
