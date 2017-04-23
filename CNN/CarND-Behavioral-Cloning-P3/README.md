@@ -1,14 +1,12 @@
-#**Behavioral Cloning** 
+[*Behavioral Cloning*] 
 
-##Writeup Template
 
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
 
 ---
 
-**Behavioral Cloning Project**
+##***Behavioral Cloning Project***
 
-The goals / steps of this project are the following:
+###The goals / steps of this project are the following:
 * Use the simulator to collect data of good driving behavior
 * Build, a convolution neural network in Keras that predicts steering angles from images
 * Train and validate the model with a training and validation set
@@ -26,8 +24,8 @@ The goals / steps of this project are the following:
 [image6]: ./examples/placeholder_small.png "Normal Image"
 [image7]: ./examples/placeholder_small.png "Flipped Image"
 
-## Rubric Points
-###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
+###Rubric Points
+#####Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
 
 ---
 ###Files Submitted & Code Quality
@@ -35,10 +33,12 @@ The goals / steps of this project are the following:
 ####1. Submission includes all required files and can be used to run the simulator in autonomous mode
 
 My project includes the following files:
-* model.py containing the script to create and train the model
-* drive.py for driving the car in autonomous mode
-* model.h5 containing a trained convolution neural network 
-* writeup_report.md or writeup_report.pdf summarizing the results
+* [model.py] containing the script to create and train the model, it uses a Python generator, if needed, to generate data for training rather than storing the training data in memory
+* [drive.py] for driving the car in autonomous mode
+* [model.h5] containing a trained convolution neural network, which is the input file to simulator 
+* [REAMDE.md] summarizing the results
+* [P3.ipynb] my notebook
+* [video.mp4] recoding the simulated behaviors of my autonomous car
 
 ####2. Submission includes functional code
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
