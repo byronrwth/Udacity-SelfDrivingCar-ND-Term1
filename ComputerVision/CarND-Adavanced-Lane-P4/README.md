@@ -36,7 +36,8 @@ The goals / steps of this project are the following:
 ## Outlines in this document
 * Project pipelines are in `advanced-lanes-P4.ipynb`.
 * Helper functions are in `helperfunctions.py`.
-* The images for camera calibration are stored in the folder called `camera_cal`. * The images in `test_images` are for testing your pipeline on single frames.
+* The images for camera calibration are stored in the folder called `camera_cal`. 
+* The images in `test_images` are for testing your pipeline on single frames.
 * The `camera_calibration_result.p` which stores calculated camera matrix and distortion coefficients, is used to undistort following calibration images
 
 
@@ -50,7 +51,7 @@ I start by preparing "object points", which will be the (x, y, z) coordinates of
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
 
-![original image][./output_images/origin_calbration10.png] ![undistorted image][./output_images/undistort_calibration10.png]
+![original image](./output_images/origin_calbration10.png) ![undistorted image](./output_images/undistort_calibration10.png)
 
 ## II. Pipeline (single images)
 
