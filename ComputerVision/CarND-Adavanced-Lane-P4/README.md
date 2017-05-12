@@ -20,13 +20,13 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/undistort_output.png "Undistorted"
-[image2]: ./test_images/test1.jpg "Road Transformed"
+[image1]: ./output_images/origin_calbration10.png "Original"
+[image2]: ./output_images/undistort_calibration10.png "Undistorted"
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
-[video1]: ./project_video.mp4 "Video"
+[video1]: ./project_output_colour.mp4 "Output Video"
 
 ### [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 #### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -39,7 +39,7 @@ The goals / steps of this project are the following:
 * The images for camera calibration are stored in the folder called `camera_cal`. 
 * The images in `test_images` are for testing your pipeline on single frames.
 * The `camera_calibration_result.p` which stores calculated camera matrix and distortion coefficients, is used to undistort following calibration images
-
+* The output video `project_output_colour.mp4`
 
 ## I. Camera Calibration
 
@@ -50,19 +50,19 @@ The code for this step is contained in the first code cell of the IPython notebo
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
+![Original][image1] ![Undistorted][image2]
 
-![original image](./output_images/origin_calbration10.png) ![undistorted image](./output_images/undistort_calibration10.png)
 
 ## II. Pipeline (single images)
 
 #### 2. Provide an example of a distortion-corrected image.
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
-![alt text][image2]
+![](./test_images/xygrad.jpg)
 
 #### 3. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
+I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `advanced-lanes-P4.ipynb`).  Here's an example of my output for this step.  
 
-![alt text][image3]
+![](./output_images/combined_threshold_binary_xygrad.png)
 
 #### 4. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
@@ -116,7 +116,7 @@ I implemented this step in lines # through # in my code in `yet_another_file.py`
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./project_output_colour.mp4)
 
 ---
 
