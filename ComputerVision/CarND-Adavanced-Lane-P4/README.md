@@ -24,9 +24,16 @@ The goals / steps of this project are the following:
 [image2]: ./output_images/undistort_calibration10.png "Undistorted"
 [image3]: ./test_images/xygrad.jpg "Distorted road" 
 [image4]: ./output_images/undistorted_xygrad.png "Undistorted road"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
-[video1]: ./project_output_colour.mp4 "Output Video"
+[image5]: ./output_images/combined_threshold_binary_xygrad.png "combined threshold binary"
+[image6]: ./output_images/combined_s_Xgradient_binary.jpg "combined s color and X gradient"
+[image7]: ./output_images/undistorted_source_pts.jpg "undistort image with source points"
+[image8]: ./output_images/warped_dest_pts.jpg "warped image with destination points"
+[image9]: ./output_images/warped_binary.jpg "warped binary"
+[image10]: ./output_images/sliding_window.jpg "sliding window to filter out peak pts"
+[image11]: ./output_images/fit_2nd_poly.jpg "Fit a second order polynomial"
+[image12]: ./output_images/colorzone.jpg "draw color zone in undistort original image"
+
+
 
 ### [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 #### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -50,7 +57,7 @@ The code for this step is contained in the first code cell of the IPython notebo
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
-![alt text][image1] ![alt text][image2]
+![][image1] ![][image2]
 
 
 ## II. Pipeline (single images)
@@ -58,12 +65,12 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 #### 2. Provide an example of a distortion-corrected image.
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
 
-![alt text][image3] ![alt text][image4]
+![][image3] ![][image4]
 
 #### 3. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `advanced-lanes-P4.ipynb`).  Here's an example of my output for this step.  
 
-![](./output_images/combined_threshold_binary_xygrad.png)
+![][image5] ![][image6]
 
 #### 4. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
@@ -93,23 +100,33 @@ This resulted in the following source and destination points:
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
-![alt text][image4]
+![][image7] ![][image8]
 
 #### 5. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+I first got a perspective transformed binary for easier lanes detection:
 
-![alt text][image5]
+![][image9]
+
+Then I used sliding window and draw histogram of detected brighter lane area:
+
+
+![][image10]
+
+
+then I used with Polynomial fit and fit my lane lines with a 2nd order polynomial kinda like this:
+
+![][image11]
 
 #### 6. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `my_other_file.py`
+I did this in lines # through # in my code in `advanced-lanes-P4.ipynb`
 
 #### 7. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+I implemented this step in lines # through # in my code in `advanced-lanes-P4.ipynb`, after using 2nd polynomial I get (x,y) pairs for left and right lanes, then I draw color between them, then calls warpPerspective to draw the colored zone back to original image.  Here is an example of my result on a test image:
 
-![alt text][image6]
+![][image12]
 
 ---
 
@@ -117,13 +134,16 @@ I implemented this step in lines # through # in my code in `yet_another_file.py`
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./project_output_colour.mp4)
+Here's a [project output color video](https://youtu.be/EsfrwvINz2Q)
 
 ---
 
 ## IV. Discussion
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+  
+1, problem: needs manually try and set for x gradient and s color threshold
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+2, problem: for perspective transform, hard to find exact parallel lane pairs, also need to manualy set for destination and source points from orginial and undistorted images
 
+3, from previous unperfectly parallel lanes I calculated out the radius of left and right lanes are 18970m and 7872m, this should exceed accepted range of proper lane radius.
