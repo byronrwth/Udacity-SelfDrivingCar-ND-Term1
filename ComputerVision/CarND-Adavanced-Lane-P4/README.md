@@ -58,7 +58,7 @@ I start by preparing "object points", which will be the (x, y, z) coordinates of
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
 
-![](output_images/origin_calbration10.png) ![](output_images/undistort_calibration10.png)
+![](output_images/undistort_calibration10.png)
 
 ## II. Pipeline (single images)
 
@@ -67,10 +67,19 @@ To demonstrate this step, I will describe how I apply the distortion correction 
 
 ![](output_images/undistorted_xygrad.png)
 
+form previous chessboard calibration I got mtx and dist for this camera, then I just call cv2.undistort for this new distorted road image, and I will output undistort one.   
 
+Code is in cell 12 , in IPython notebook  `./advanced-lanes-P4.ipynb`
 
 #### 3. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `advanced-lanes-P4.ipynb`).  Here's an example of my output for this step.  
+I used a combination of color and gradient thresholds to generate a binary image.  Here's an example of my output for this step.  
+
+Both images are coming from filtering with S color threshold and x gradient threshold, difference is I used mpimg.imread to load in original distorted image for left image, in which blue color indicates s color output, green color indicates x gradient output; and I used cv2.imread to load in original distorted image for right image.
+
+To make left image, Code is in cell 26 , in IPython notebook  `./advanced-lanes-P4.ipynb`
+To make right image, Code is in cell 23, xgrad_s_threshold() .
+
+The problem is, both s color threshold and x gradient threshold parameters are defined by trying and test.
 
 
 ![](output_images/combined_s_Xgradient_binary.png)
@@ -78,29 +87,23 @@ I used a combination of color and gradient thresholds to generate a binary image
 
 #### 4. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
+First I need to decide which part is needed to transform into a birds-eye view. I only care about lanes, so I cut out this area and record the source points:
 
-```
-src = np.float32(
-    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
-    [((img_size[0] / 6) - 10), img_size[1]],
-    [(img_size[0] * 5 / 6) + 60, img_size[1]],
-    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
-dst = np.float32(
-    [[(img_size[0] / 4), 0],
-    [(img_size[0] / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), 0]])
+![](output_images/region2transform.png)
 
-```
+The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
+
+I hope in transformed birds-eye view, destination points are parallel and indicate a rectangle. so after trying, I set source points and destination points:
+
+
 This resulted in the following source and destination points:
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
+| 550, 470      | 200, 0        | 
+| 700, 470      | 1080, 0       |
+| 1000, 720     | 1080, 720     |
+| 120, 720      | 200, 720      |
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
@@ -115,25 +118,39 @@ I first got a perspective transformed binary for easier lanes detection:
 
 ![][image9]
 
-Then I used sliding window and draw histogram of detected brighter lane area:
+Then I used sliding window and draw histogram of detected brighter lane area to identify lane line pixels.
+
+1, Divide the image into 9 horizontal windows of equal height
+2, For each step, identify window boundaries in x and y (and right and left), identify the nonzero pixels in x and y within the window, append these indices to the lists. If you found > minpix pixels, recenter next window on their mean position
+3, concatenate the arrays of indices, and extract left and right line pixel positions
 
 
 ![][image10]
 
 
-then I used with Polynomial fit and fit my lane lines with a 2nd order polynomial kinda like this:
+4. then I used with Polynomial fit and fit my lane lines with a 2nd order polynomial kinda like this:
 
 ![][image11]
 
 #### 6. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `advanced-lanes-P4.ipynb`
+I did this in cell 251 in `advanced-lanes-P4.ipynb`
+
+y_eval = np.max(ploty)
+left_curverad = ((1 + (2*left_fit[0]*y_eval + left_fit[1])**2)**1.5) / np.absolute(2*left_fit[0])
+right_curverad = ((1 + (2*right_fit[0]*y_eval + right_fit[1])**2)**1.5) / np.absolute(2*right_fit[0])
+
 
 #### 7. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
 I implemented this step in lines # through # in my code in `advanced-lanes-P4.ipynb`, after using 2nd polynomial I get (x,y) pairs for left and right lanes, then I draw color between them, then calls warpPerspective to draw the colored zone back to original image.  Here is an example of my result on a test image:
 
 ![][image12]
+
+#### 8. Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
+
+
+![](output_images/output_lane_curv.png)
 
 ---
 
@@ -154,3 +171,5 @@ Here's a [project output color video](https://youtu.be/EsfrwvINz2Q)
 2, problem: for perspective transform, hard to find exact parallel lane pairs, also need to manualy set for destination and source points from orginial and undistorted images
 
 3, from previous unperfectly parallel lanes I calculated out the radius of left and right lanes are 18970m and 7872m, this should exceed accepted range of proper lane radius.
+
+how to improve: here I only use y=720 which is the maximum value in image to calculate radius. Considering lanes are continuous, I think I can choose more y values for calculations and then choose a smooth value.
