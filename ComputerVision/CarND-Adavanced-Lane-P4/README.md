@@ -25,13 +25,13 @@ The goals / steps of this project are the following:
 [image3]: ./test_images/xygrad.jpg "Distorted road" 
 [image4]: ./output_images/undistorted_xygrad.png "Undistorted road"
 [image5]: ./output_images/combined_threshold_binary_xygrad.png "combined threshold binary"
-[image6]: ./output_images/combined_s_Xgradient_binary.jpg "combined s color and X gradient"
-[image7]: ./output_images/undistorted_source_pts.jpg "undistort image with source points"
-[image8]: ./output_images/warped_dest_pts.jpg "warped image with destination points"
-[image9]: ./output_images/warped_binary.jpg "warped binary"
-[image10]: ./output_images/sliding_window.jpg "sliding window to filter out peak pts"
-[image11]: ./output_images/fit_2nd_poly.jpg "Fit a second order polynomial"
-[image12]: ./output_images/colorzone.jpg "draw color zone in undistort original image"
+[image6]: ./output_images/combined_s_Xgradient_binary.png  "combined s color and X gradient"
+[image7]: ./output_images/undistorted_source_pts.png "undistort image with source points"
+[image8]: ./output_images/warped_dest_pts.png  "warped image with destination points"
+[image9]: ./output_images/warped_binary.png "warped binary"
+[image10]: ./output_images/sliding_window.png "sliding window to filter out peak pts"
+[image11]: ./output_images/fit_2nd_poly.png  "Fit a second order polynomial"
+[image12]: ./output_images/colorzone.png "draw color zone in undistort original image"
 
 
 
@@ -57,20 +57,24 @@ The code for this step is contained in the first code cell of the IPython notebo
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
-![][image1] ![][image2]
 
+![](output_images/origin_calbration10.png) ![](output_images/undistort_calibration10.png)
 
 ## II. Pipeline (single images)
 
 #### 2. Provide an example of a distortion-corrected image.
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
 
-![][image3] ![][image4]
+![](output_images/undistorted_xygrad.png)
+
+
 
 #### 3. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `advanced-lanes-P4.ipynb`).  Here's an example of my output for this step.  
 
-![][image5] ![][image6]
+
+![](output_images/combined_s_Xgradient_binary.png)
+
 
 #### 4. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
@@ -100,7 +104,10 @@ This resulted in the following source and destination points:
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
-![][image7] ![][image8]
+
+
+![](output_images/undistorted_source_pts.png)
+
 
 #### 5. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
