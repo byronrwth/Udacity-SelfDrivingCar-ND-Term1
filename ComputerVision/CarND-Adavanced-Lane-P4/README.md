@@ -65,24 +65,24 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 #### 2. Provide an example of a distortion-corrected image.
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
 
-![](output_images/undistorted_xygrad.png)
+![](output_images/camera_cali_straight1.png)
 
 form previous chessboard calibration I got mtx and dist for this camera, then I just call cv2.undistort for this new distorted road image, and I will output undistort one.   
 
-Code is in cell 12 , in IPython notebook  `./advanced-lanes-P4.ipynb`
+Code is in cell 272 , in IPython notebook  `./advanced-lanes-P4.ipynb`
 
 #### 3. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 I used a combination of color and gradient thresholds to generate a binary image.  Here's an example of my output for this step.  
 
 Both images are coming from filtering with S color threshold and x gradient threshold, difference is I used mpimg.imread to load in original distorted image for left image, in which blue color indicates s color output, green color indicates x gradient output; and I used cv2.imread to load in original distorted image for right image.
 
-To make left image, Code is in cell 26 , in IPython notebook  `./advanced-lanes-P4.ipynb`
-To make right image, Code is in cell 23, xgrad_s_threshold() .
+To make left image, Code is in cell 286 , in IPython notebook  `./advanced-lanes-P4.ipynb`
+To make right image, Code is in cell 283, xgrad_s_threshold() .
 
 The problem is, both s color threshold and x gradient threshold parameters are defined by trying and test.
 
 
-![](output_images/combined_s_Xgradient_binary.png)
+![](output_images/blue_green_combi_xgrad_s_binary.png)
 
 
 #### 4. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
@@ -100,14 +100,14 @@ This resulted in the following source and destination points:
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 550, 470      | 200, 0        | 
-| 700, 470      | 1080, 0       |
-| 1000, 720     | 1080, 720     |
-| 120, 720      | 200, 720      |
+| 560, 470      | 200, 0        | 
+| 730, 470      | 1100, 0       |
+| 1080, 720     | 1100, 720     |
+| 200, 720      | 200, 720      |
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
-
+Notice !!  here source points must be chosen symmetrically, even the mapped lanes may not be parallel in birds-eye view. For all test images which have the same camera calibraion settings,  symmetrical source points can guarantee both lanes can be drawn in birds-eye view, we need make sure right or left lane to be detected first, then second to think they are mapped perfectly parallel.
 
 ![](output_images/undistorted_source_pts.png)
 
@@ -134,7 +134,7 @@ Then I used sliding window and draw histogram of detected brighter lane area to 
 
 #### 6. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in cell 251 in `advanced-lanes-P4.ipynb`
+I did this in cell 190 in `advanced-lanes-P4.ipynb`
 
 y_eval = np.max(ploty)
 left_curverad = ((1 + (2*left_fit[0]*y_eval + left_fit[1])**2)**1.5) / np.absolute(2*left_fit[0])
@@ -143,7 +143,7 @@ right_curverad = ((1 + (2*right_fit[0]*y_eval + right_fit[1])**2)**1.5) / np.abs
 
 #### 7. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines # through # in my code in `advanced-lanes-P4.ipynb`, after using 2nd polynomial I get (x,y) pairs for left and right lanes, then I draw color between them, then calls warpPerspective to draw the colored zone back to original image.  Here is an example of my result on a test image:
+I implemented this step in my code in `advanced-lanes-P4.ipynb`, after using 2nd polynomial I get (x,y) pairs for left and right lanes, then I draw color between them, then calls warpPerspective to draw the colored zone back to original image.  Here is an example of my result on a test image:
 
 ![][image12]
 
@@ -158,7 +158,7 @@ I implemented this step in lines # through # in my code in `advanced-lanes-P4.ip
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [project output color video](https://youtu.be/EsfrwvINz2Q)
+Here's a [project output color video](https://youtu.be/GCkuNOkItkI)
 
 ---
 
@@ -168,8 +168,11 @@ Here's a [project output color video](https://youtu.be/EsfrwvINz2Q)
   
 1, problem: needs manually try and set for x gradient and s color threshold
 
-2, problem: for perspective transform, hard to find exact parallel lane pairs, also need to manualy set for destination and source points from orginial and undistorted images
+2, pproblem: for perspective transform, hard to find exact parallel lane pairs, also need to manualy set for destination and source points from orginial and undistorted images, if choose unsymmetric source points from one undistored image, then 
+for rest testing images this is not a good option, because other test images may miss to detect either left or right lane within their birds-eye view !
 
-3, from previous unperfectly parallel lanes I calculated out the radius of left and right lanes are 18970m and 7872m, this should exceed accepted range of proper lane radius.
+3, from previous unperfectly parallel lanes I calculated out the radius of left and right lanes, since they are not paralel in birds-eye view, both radius can differ 10 times ! this should exceed accepted range of proper lane radius.
 
 how to improve: here I only use y=720 which is the maximum value in image to calculate radius. Considering lanes are continuous, I think I can choose more y values for calculations and then choose a smooth value.
+
+4, from my generated output video, most time both lanes detected are matching the real lines, however under tree shadowing area, when daylight is suddenly dark, I can see my detect lanes can suddenly jump into wired shapes. My detection system should be more robust under sudden daylight changes !
