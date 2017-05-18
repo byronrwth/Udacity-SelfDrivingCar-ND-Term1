@@ -46,7 +46,7 @@ The goals / steps of this project are the following:
 * The images for camera calibration are stored in the folder called `camera_cal`. 
 * The images in `test_images` are for testing your pipeline on single frames.
 * The `camera_calibration_result.p` which stores calculated camera matrix and distortion coefficients, is used to undistort following calibration images
-* The output video `project_output_colour.mp4`
+* The output video `project_output_mini_pipleline.mp4`
 
 ## I. Camera Calibration
 
