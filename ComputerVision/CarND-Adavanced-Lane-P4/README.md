@@ -46,7 +46,7 @@ The goals / steps of this project are the following:
 * The images for camera calibration are stored in the folder called `camera_cal`. 
 * The images in `test_images` are for testing your pipeline on single frames.
 * The `camera_calibration_result.p` which stores calculated camera matrix and distortion coefficients, is used to undistort following calibration images
-* The output video `project_output_mini_pipleline.mp4`
+* The output video `output_average_pipleline.mp4`
 
 ## I. Camera Calibration
 
@@ -158,7 +158,7 @@ I implemented this step in my code in `advanced-lanes-P4.ipynb`, after using 2nd
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [project output color video](https://youtu.be/GCkuNOkItkI)
+Here's a [project output color video](https://youtu.be/E7K9GEic8C8)
 
 ---
 
@@ -176,3 +176,6 @@ for rest testing images this is not a good option, because other test images may
 how to improve: here I only use y=720 which is the maximum value in image to calculate radius. Considering lanes are continuous, I think I can choose more y values for calculations and then choose a smooth value.
 
 4, from my generated output video, most time both lanes detected are matching the real lines, however under tree shadowing area, when daylight is suddenly dark, I can see my detect lanes can suddenly jump into wired shapes. My detection system should be more robust under sudden daylight changes !
+
+solution 1): use Markov assumption, to average previous frame and current frame, in case frame changes too much
+solution 2): use S color + V color to better detect lanes
