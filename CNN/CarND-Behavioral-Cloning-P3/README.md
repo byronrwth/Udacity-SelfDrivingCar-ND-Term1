@@ -14,7 +14,9 @@ In this project, you will use what you've learned about deep neural networks and
 * [model-bridge.h5] containing a trained convolution neural network, which is the input file to simulator 
 * [REAMDE.md] summarizing the results
 * [P3.ipynb] my notebook
-* [suc1.mp4] recoding the simulated behaviors of my autonomous car [link to my video result](https://youtu.be/ny0E7QvxdHE)
+* [suc1.mp4] recoding the simulated behaviors of my autonomous car 
+[suc1.mp4](https://youtu.be/ny0E7QvxdHE)
+
 [PC recorded version](https://youtu.be/CGskYuraCDI)
 
 **2. Project Outline**
@@ -161,28 +163,28 @@ I used an adam optimizer so that manually training the learning rate wasn't nece
 
 To capture good driving behavior, I first recorded  1 track using center lane driving. Here is an example image of center lane driving:
 
-![](output_images/sample_middle2.png)
+![](output_images/sample_middle2.jpg)
 
 I then recorded the vehicle after crossed bridge, and turn from right to left during the 1st sharp turn to left:
 
 
-![](output_images/sample_afterbridge.png)
+![](output_images/sample_afterbridge.jpg)
 
 
 To avoid car rushes out of left edge, I carefully recorded the process when it turns back from left edge back to center:
 
 
-![](output_images/sample1_leftedge.png)
+![](output_images/sample1_leftedge.jpg)
 
-![](output_images/sample2_leftedge.png)
+![](output_images/sample2_leftedge.jpg)
 
-![](output_images/sample3_leftedge.png)
+![](output_images/sample3_leftedge.jpg)
 
-![](output_images/sample4_leftedge.png)
+![](output_images/sample4_leftedge.jpg)
 
-![](output_images/sample5_leftedge.png)
+![](output_images/sample5_leftedge.jpg)
 
-![](output_images/sample6_leftedge.png)
+![](output_images/sample6_leftedge.jpg)
 
 Then I repeated this process on track two in order to get more data points.
 
@@ -191,7 +193,9 @@ Then I repeated this process on track two in order to get more data points.
 
 ### C. Discussions
 
-[link to my video result](https://youtu.be/ny0E7QvxdHE)
+[suc1.mp4](https://youtu.be/ny0E7QvxdHE)
+
+
 [PC recorded version](https://youtu.be/CGskYuraCDI)
 
 from above video, the car though very good at turn back to center, both from left edge and right edge, however it likes to drive at nearby edge area, instead of strictly stay in center of lane, I guess this is because I drove it crazily, I learned this bad driving way from GTA5, and my car learned it from me, sorry.
