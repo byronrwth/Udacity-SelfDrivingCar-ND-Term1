@@ -6,7 +6,7 @@ Computer Vision:
 
 - P4:  compute the camera calibration, apply distortion correction to raw images, and then use color transforms, gradients, etc., to create thresholded binary images and apply perspective transform on them to detect lane pixels; determine the curvature of the lane by numerical estimation and output visual display of the lanes
 
-- P5: perform a Histogram of Oriented Gradients (HOG) feature extraction on a labeled training set of images clipped from video stream, and train a classifier Linear SVM classifier with these images; implement a sliding-window technique and use your trained classifier to search for vehicles in images, create a heat map of recurring detections frame by frame to reject outliers and visually display the estimated a bounding box for vehicles detected
+- P5: perform a Histogram of Oriented Gradients (HOG) feature extraction on a labeled training set of images and train a classifier Linear SVM classifier with these images; implement a sliding-window technique and use your trained classifier to search for vehicles in images, create a heat map of recurring detections frame by frame to reject outliers and visually display the estimated a bounding box for vehicles detected
 
 Deep Learning:
 - P2:  use online German Traffic Sign Dataset to train my CNN architecure which bases on LeNet Model plus dropout, max-pooling layers;  the model is implemented with Keras and Tensorflow;  parameters are  tuned with Adam Optimizer, and after 20-30 epochs,  test accuracy reaches 88%, validation reaches 95% 
